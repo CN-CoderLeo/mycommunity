@@ -2,7 +2,14 @@ package com.lg.mycommunity.entity;
 
 import java.util.Date;
 
+
+
+
 public class User {
+
+ 
+
+
 
     private int id;
     private String username;
@@ -19,7 +26,11 @@ public class User {
         return id;
     }
 
+
+
+
     public void setId(int id) {
+
         this.id = id;
     }
 
