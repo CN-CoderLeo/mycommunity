@@ -7,6 +7,7 @@ import com.lg.mycommunity.entity.Page;
 import com.lg.mycommunity.entity.User;
 import com.lg.mycommunity.service.CommentService;
 import com.lg.mycommunity.service.DiscussPostService;
+import com.lg.mycommunity.service.LikeService;
 import com.lg.mycommunity.service.UserService;
 import com.lg.mycommunity.util.CommunityConstant;
 import com.lg.mycommunity.util.CommunityUtil;
@@ -36,8 +37,8 @@ public class DiscussPostController implements CommunityConstant {
     @Autowired
     private CommentService commentService;
 
-//    @Autowired
-//    private LikeService likeService;
+    @Autowired
+    private LikeService likeService;
 //
 //    @Autowired
 //    private EventProducer eventProducer;
@@ -78,13 +79,13 @@ public class DiscussPostController implements CommunityConstant {
         User user = userService.findUserById(post.getUserId());
         model.addAttribute("user", user);
 
-//        // 点赞数量
-//        long likeCount = likeService.findEntityLikeCount(ENTITY_TYPE_POST, discussPostId);
-//        model.addAttribute("likeCount", likeCount);
-//        // 点赞状态
-//        int likeStatus = hostHolder.getUser() == null ? 0 :
-//                likeService.findEntityLikeStatus(ENTITY_TYPE_POST, discussPostId, hostHolder.getUser().getId());
-//        model.addAttribute("likeStatus", likeStatus);
+        // 点赞数量
+        long likeCount = likeService.findEntityLikeCount(ENTITY_TYPE_POST, discussPostId);
+        model.addAttribute("likeCount", likeCount);
+        // 点赞状态
+        int likeStatus = hostHolder.getUser() == null ? 0 :
+                likeService.findEntityLikeStatus(ENTITY_TYPE_POST, discussPostId, hostHolder.getUser().getId());
+        model.addAttribute("likeStatus", likeStatus);
 
         // 评论分页信息
         page.setLimit(5);
@@ -107,12 +108,12 @@ public class DiscussPostController implements CommunityConstant {
                 // 作者
                 commentVo.put("user", userService.findUserById(comment.getUserId()));
 
-//                //点赞数量
-//                likeCount = likeService.findEntityLikeCount(ENTITY_TYPE_COMMENT, comment.getId());
-//                commentVo.put("likeCount", likeCount);
-//                //点赞状态,需要判断当前用户是否登录，没有登录无法点赞
-//                likeStatus = hostHolder.getUser() == null ? 0 : likeService.findEntityLikeStatus(ENTITY_TYPE_COMMENT, comment.getId(), hostHolder.getUser().getId());
-//                commentVo.put("likeStatus", likeStatus);
+                //点赞数量
+                likeCount = likeService.findEntityLikeCount(ENTITY_TYPE_COMMENT, comment.getId());
+                commentVo.put("likeCount", likeCount);
+                //点赞状态,需要判断当前用户是否登录，没有登录无法点赞
+                likeStatus = hostHolder.getUser() == null ? 0 : likeService.findEntityLikeStatus(ENTITY_TYPE_COMMENT, comment.getId(), hostHolder.getUser().getId());
+                commentVo.put("likeStatus", likeStatus);
                 // 回复列表
                 List<Comment> replyList = commentService.findCommentsByEntity(
                         ENTITY_TYPE_COMMENT, comment.getId(), 0, Integer.MAX_VALUE);
@@ -129,12 +130,13 @@ public class DiscussPostController implements CommunityConstant {
                         User target = reply.getTargetId() == 0 ? null : userService.findUserById(reply.getTargetId());
                         replyVo.put("target", target);
 
-//                        //点赞数量
-//                        likeCount = likeService.findEntityLikeCount(ENTITY_TYPE_COMMENT, reply.getId());
-//                        replyVo.put("likeCount", likeCount);
-//                        //点赞状态,需要判断当前用户是否登录，没有登录无法点赞
-//                        likeStatus = hostHolder.getUser() == null ? 0 : likeService.findEntityLikeStatus(ENTITY_TYPE_COMMENT, reply.getId(), hostHolder.getUser().getId());
-//                        replyVo.put("likeStatus", likeStatus);
+                        //点赞数量
+                        likeCount = likeService.findEntityLikeCount(ENTITY_TYPE_COMMENT, reply.getId());
+                        replyVo.put("likeCount", likeCount);
+
+                        //点赞状态,需要判断当前用户是否登录，没有登录无法点赞
+                        likeStatus = hostHolder.getUser() == null ? 0 : likeService.findEntityLikeStatus(ENTITY_TYPE_COMMENT, reply.getId(), hostHolder.getUser().getId());
+                        replyVo.put("likeStatus", likeStatus);
 
                         replyVoList.add(replyVo);
                     }
