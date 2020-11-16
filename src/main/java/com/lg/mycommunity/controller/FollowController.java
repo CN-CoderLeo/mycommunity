@@ -1,8 +1,10 @@
 package com.lg.mycommunity.controller;
 
 
+import com.lg.mycommunity.entity.Event;
 import com.lg.mycommunity.entity.Page;
 import com.lg.mycommunity.entity.User;
+import com.lg.mycommunity.event.EventProducer;
 import com.lg.mycommunity.service.FollowService;
 import com.lg.mycommunity.service.UserService;
 import com.lg.mycommunity.util.CommunityConstant;
@@ -31,8 +33,8 @@ public class FollowController implements CommunityConstant {
     @Autowired
     private UserService userService;
 
-//    @Autowired
-//    private EventProducer eventProducer;
+    @Autowired
+    private EventProducer eventProducer;
 
 
     @RequestMapping(path = "/follow", method = RequestMethod.POST)
@@ -43,13 +45,13 @@ public class FollowController implements CommunityConstant {
         followService.follow(user.getId(), entityType, entityId);
 
         // 注意：目前只实现了关注人，所以setEntityUserId为entityId
-//        Event event = new Event()
-//                .setTopic(TOPIC_FOLLOW)
-//                .setUserId(hostHolder.getUser().getId())
-//                .setEntityType(entityType)
-//                .setEntityId(entityId)
-//                .setEntityUserId(entityId);
-//        eventProducer.fireEvent(event);
+        Event event = new Event()
+                .setTopic(TOPIC_FOLLOW)
+                .setUserId(hostHolder.getUser().getId())
+                .setEntityType(entityType)
+                .setEntityId(entityId)
+                .setEntityUserId(entityId);
+        eventProducer.fireEvent(event);
         return CommunityUtil.getJSONString(0, "已关注!");
     }
 

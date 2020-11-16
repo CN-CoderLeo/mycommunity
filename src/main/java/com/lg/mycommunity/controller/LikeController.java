@@ -1,6 +1,8 @@
 package com.lg.mycommunity.controller;
 
+import com.lg.mycommunity.entity.Event;
 import com.lg.mycommunity.entity.User;
+import com.lg.mycommunity.event.EventProducer;
 import com.lg.mycommunity.service.LikeService;
 import com.lg.mycommunity.util.CommunityConstant;
 import com.lg.mycommunity.util.CommunityUtil;
@@ -23,8 +25,8 @@ public class LikeController implements CommunityConstant {
     @Autowired
     private HostHolder hostHolder;
 
-//    @Autowired
-//    private EventProducer eventProducer;
+    @Autowired
+    private EventProducer eventProducer;
 
 
     @RequestMapping(path = "/like", method = RequestMethod.POST)
@@ -42,17 +44,17 @@ public class LikeController implements CommunityConstant {
         map.put("likeCount", likeCount);
         map.put("likeStatus", likeStatus);
 
-//        // 触发点赞事件,仅点赞需要通知
-//        if (likeStatus == 1) {
-//            Event event = new Event()
-//                    .setTopic(TOPIC_LIKE)
-//                    .setUserId(hostHolder.getUser().getId())
-//                    .setEntityType(entityType)
-//                    .setEntityId(entityId)
-//                    .setEntityUserId(entityUserId)
-//                    .setData("postId", postId);
-//            eventProducer.fireEvent(event);
-//        }
+        // 触发点赞事件,仅点赞需要通知
+        if (likeStatus == 1) {
+            Event event = new Event()
+                    .setTopic(TOPIC_LIKE)
+                    .setUserId(hostHolder.getUser().getId())
+                    .setEntityType(entityType)
+                    .setEntityId(entityId)
+                    .setEntityUserId(entityUserId)
+                    .setData("postId", postId);
+            eventProducer.fireEvent(event);
+        }
 
         return CommunityUtil.getJSONString(0, null, map);
     }

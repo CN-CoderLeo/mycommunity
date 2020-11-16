@@ -18,6 +18,7 @@ public class LikeService {
         redisTemplate.execute(new SessionCallback() {
             @Override
             public Object execute(RedisOperations operations) throws DataAccessException {
+
                 String entityLikeKey = RedisKeyUtil.getEntityLikeKey(entityType, entityId);
                 String userLikeKey = RedisKeyUtil.getUserLikeKey(entityUserId);
                 boolean isMember = redisTemplate.opsForSet().isMember(entityLikeKey, userId);

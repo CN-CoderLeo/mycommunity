@@ -1,10 +1,8 @@
 package com.lg.mycommunity.controller;
 
 
-import com.lg.mycommunity.entity.Comment;
-import com.lg.mycommunity.entity.DiscussPost;
-import com.lg.mycommunity.entity.Page;
-import com.lg.mycommunity.entity.User;
+import com.lg.mycommunity.entity.*;
+import com.lg.mycommunity.event.EventProducer;
 import com.lg.mycommunity.service.CommentService;
 import com.lg.mycommunity.service.DiscussPostService;
 import com.lg.mycommunity.service.LikeService;
@@ -39,9 +37,9 @@ public class DiscussPostController implements CommunityConstant {
 
     @Autowired
     private LikeService likeService;
-//
-//    @Autowired
-//    private EventProducer eventProducer;
+
+    @Autowired
+    private EventProducer eventProducer;
 
     @RequestMapping(path = "/add", method = RequestMethod.POST)
     @ResponseBody
@@ -58,13 +56,13 @@ public class DiscussPostController implements CommunityConstant {
         post.setCreateTime(new Date());
         discussPostService.addDiscussPost(post);
 
-//        // 触发发帖事件
-//        Event event=new Event()
-//                .setTopic(TOPIC_PUBLISH)
-//                .setUserId(user.getId())
-//                .setEntityType(ENTITY_TYPE_POST)
-//                .setEntityId(post.getId());
-//        eventProducer.fireEvent(event);
+        // 触发发帖事件
+        Event event=new Event()
+                .setTopic(TOPIC_PUBLISH)
+                .setUserId(user.getId())
+                .setEntityType(ENTITY_TYPE_POST)
+                .setEntityId(post.getId());
+        eventProducer.fireEvent(event);
 
         // 报错的情况,将来统一处理.
         return CommunityUtil.getJSONString(0, "发布成功!");

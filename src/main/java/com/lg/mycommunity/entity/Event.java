@@ -12,10 +12,20 @@ import java.util.Map;
  */
 public class Event {
 
+    //事件的类型
     private String topic;
+
+    //事件触发的人的userid
     private int userId;
+
+    //事件所发生在的实体的类型
     private int entityType;
+
+
+    //事件所发生在的实体的id
     private int entityId;
+
+
     //实体的作者
     private int entityUserId;
 
@@ -31,7 +41,7 @@ public class Event {
 
     /*
     此处这样设计，是为了更灵活的设置属性，避免使用多个构造函数。
-    这样设计很灵活和方便
+    这样设计很灵活和方便  如event.setTopic().setTopic()
      */
     public Event setTopic(String topic) {
         this.topic = topic;
