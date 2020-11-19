@@ -2,13 +2,7 @@ package com.lg.mycommunity.entity;
 
 import java.util.Date;
 
-/**
- * @author coolsen
- * @version 1.0.0
- * @ClassName Message.java
- * @Description 私信实体类
- * @createTime 5/8/2020 7:49 PM
- */
+
 public class Message {
     private int id;
     private int fromId;

@@ -3,13 +3,7 @@ package com.lg.mycommunity.entity;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author coolsen
- * @version 1.0.0
- * @ClassName Event.java
- * @Description 事件，用于消息队列
- * @createTime 2020/5/14 21:19
- */
+
 public class Event {
 
     //事件的类型

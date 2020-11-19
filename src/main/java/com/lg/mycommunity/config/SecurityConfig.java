@@ -61,6 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Comm
                 .antMatchers(
                         //管理员删除帖子的权限
                         "/discuss/delete",
+                        //查看网站uv和dau数据
                         "/data/**"
                 )
                 .hasAnyAuthority(

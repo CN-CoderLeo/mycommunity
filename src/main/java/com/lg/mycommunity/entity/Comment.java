@@ -2,13 +2,7 @@ package com.lg.mycommunity.entity;
 
 import java.util.Date;
 
-/**
- * @author coolsen
- * @version 1.0.0
- * @ClassName Comment.java
- * @Description 评论实体类
- * @createTime 5/7/2020 4:27 PM
- */
+
 public class Comment {
     private int id;
     private int userId;
