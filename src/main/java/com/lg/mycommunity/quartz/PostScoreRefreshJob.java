@@ -1,6 +1,5 @@
 package com.lg.mycommunity.quartz;
 
-
 import com.lg.mycommunity.entity.DiscussPost;
 import com.lg.mycommunity.service.DiscussPostService;
 import com.lg.mycommunity.service.ElasticsearchService;

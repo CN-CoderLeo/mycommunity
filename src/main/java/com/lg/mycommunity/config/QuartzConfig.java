@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SimpleTriggerFactoryBean;
-import com.lg.mycommunity.quartz.PostScoreRefreshJob;
+
 
 @Configuration
 public class QuartzConfig {
@@ -17,7 +17,7 @@ public class QuartzConfig {
     @Bean
     public JobDetailFactoryBean postScoreRefreshJobDetail() {
         JobDetailFactoryBean factoryBean = new JobDetailFactoryBean();
-        factoryBean.setJobClass(PostScoreRefreshJob.class);
+        factoryBean.setJobClass(com.lg.mycommunity.quartz.PostScoreRefreshJob.class);
         factoryBean.setName("postScoreRefreshJob");
         factoryBean.setGroup("communityJobGroup");
         factoryBean.setDurability(true);
